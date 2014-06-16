@@ -1,7 +1,9 @@
 #include "Block.h"
 #include <time.h>
+#include <windows.h>
+#include <conio.h>
 
-int storeFunc(Block store, Block present)
+void storeFunc(Block store, Block present)
 {
 	Block temp;
 
@@ -10,7 +12,19 @@ int storeFunc(Block store, Block present)
 	present = store;
 
 	store = temp;
+}
 
+void gotoxy(int x, int y)
+{
+	COORD pos = { x, y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+void setcolor(int color, int bgcolor)
+{
+	color &= 0xf;
+	bgcolor &= 0xf;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (bgcolor << 4) | color);
 }
 
 int main(void)
@@ -19,11 +33,18 @@ int main(void)
 
 	int i = 0, j = 0;
 
-	Block arBlock[7];
-
 	Block store, next, present;
 
 	int isStored = 0;
+
+	int key = 0;
+	
+	setcolor(11, 0);
+
+	std::cout << "TETRIS!!" << std::endl;
+	std::cout << std::endl;
+
+	setcolor(15, 0);
 
 	std::cout << "�ɢǢǢǢǢǢǢǢǢǢǢǢ�" << std::endl;
 
@@ -34,53 +55,68 @@ int main(void)
 
 	std::cout << "�ʢǢǢǢǢǢǢǢǢǢǢǢ�" << std::endl;
 
+	gotoxy(30, 0);
 
-	for (i = 0; i < 4; i++)		//I shape
-	{
-		arBlock[0].changeValue(4, i);
-	}
-
-	for (i = 0; i < 3; i++)		//T shape
-	{
-		arBlock[1].changeValue(4, i);
-	}
-	arBlock[1].changeValue(3, 1);
-
-	for (i = 0; i < 3; i++)		//L shape
-	{
-		arBlock[2].changeValue(4, i);
-	}
-	arBlock[2].changeValue(3, 0);
-
-	for (i = 0; i < 3; i++)		//J shape
-	{
-		arBlock[3].changeValue(4, i);
-	}
-	arBlock[3].changeValue(3, 2);
-
-	for (i = 0; i < 2; i++)		//S shape
-	{
-		arBlock[4].changeValue(4, i);
-	}
-	arBlock[4].changeValue(3, 1);
-	arBlock[4].changeValue(3, 2);
-
-	for (i = 1; i < 3; i++)		//Z shape
-	{
-		arBlock[5].changeValue(4, i);
-	}
-	arBlock[5].changeValue(3, 0);
-	arBlock[5].changeValue(3, 1);
-
-	for (i = 0; i < 2; i++)		//O shape
-	{
-		arBlock[6].changeValue(4, i);
-	}
-	arBlock[6].changeValue(3, 0);
-	arBlock[6].changeValue(3, 1);
+	setcolor(11, 0);
 	
+	std::cout << "Stored Block";
 
-	
+	gotoxy(30, 2);
+
+	setcolor(15, 0);
+
+	std::cout << "�ɢǢǢǢǢ�";
+
+	for (int i = 3; i < 7; i++)
+	{
+		gotoxy(30, i);
+		std::cout << "��        ��";
+	}
+
+	gotoxy(30, 7);
+
+	std::cout << "�ʢǢǢǢǢ�";
+
+	gotoxy(30, 9);
+
+	setcolor(11, 0);
+
+	std::cout << "Next Block";
+
+	setcolor(15, 0);
+
+	gotoxy(30, 11);
+
+	std::cout << "�ɢǢǢǢǢ�";
+
+	for (int i = 12; i < 16; i++)
+	{
+		gotoxy(30, i);
+		std::cout << "��        ��";
+	}
+
+	gotoxy(30, 16);
+
+	std::cout << "�ʢǢǢǢǢ�";
+
+	while (1)	//Ű �Է�
+	{
+
+		if (kbhit())
+		{
+			key = _getch();
+			switch (key)
+			{
+			case 75:
+				present.turnLeft();
+				break;
+
+			case 77:
+				present.turnRight();
+				break;
+			}
+		}
+	}
 
 	
 }

@@ -20,11 +20,11 @@ public:
 		return;
 	}
 	
-	int print()			//화면 출력
+	void print(int i)			//화면 출력
 	{
-		for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 4; j++)
 		{
-			if (this->blockShape[i / 4][i % 4] == 1)
+			if (this->blockShape[i][j] == 1)
 			{
 				std::cout << "■" << std::endl;
 			}
@@ -33,11 +33,9 @@ public:
 				std::cout << "□" << std::endl;
 			}
 		}
-
-		return 1;
 	}
 
-	int turnRight()		//오른쪽 방향 클릭 회전
+	void turnRight()		//오른쪽 방향 클릭 회전
 	{
 		int blockShapeTemp[4][4];
 
@@ -56,11 +54,9 @@ public:
 				this->blockShape[i][j] = blockShape[j][3 - i];
 			}
 		}
-
-		return 1;
 	}
 
-	int turnLeft()		//왼쪽 방향 클릭 회전
+	void turnLeft()		//왼쪽 방향 클릭 회전
 	{
 		int blockShapeTemp[4][4];
 
@@ -79,11 +75,9 @@ public:
 				this->blockShape[i][j] = blockShape[3-j][i];
 			}
 		}
-
-		return 1;
 	}
 
-	int removeVoid()		//최하단 공백 제거 함수
+	void removeVoid()		//최하단 공백 제거 함수
 	{
 		bool checkZero = true;
 
@@ -126,9 +120,66 @@ public:
 				}
 			}
 		}
+	}
 
-		return 1;
+	void setShape(int shapeNum)
+	{
+		int i;
 
+		switch (shapeNum)
+		{
+
+		case 0 :for (i = 0; i < 4; i++)		//I shape
+				{
+					this->changeValue(4, i);
+				}
+				break;
+
+		case 1 :for (i = 0; i < 3; i++)		//T shape
+				{
+					this->changeValue(4, i);
+				}
+				this->changeValue(3, 1);
+				break;
+			
+		case 2 :for (i = 0; i < 3; i++)		//L shape
+				{
+					this->changeValue(4, i);
+				}
+				this->changeValue(3, 0);
+				break;
+				
+		case 3 :for (i = 0; i < 3; i++)		//J shape
+				{
+					this->changeValue(4, i);
+				}
+				this->changeValue(3, 2);
+				break;
+			
+		case 4 :for (i = 0; i < 2; i++)		//S shape
+				{
+					this->changeValue(4, i);
+				}
+				this->changeValue(3, 1);
+				this->changeValue(3, 2);
+				break;
+
+		case 5 :for (i = 1; i < 3; i++)		//Z shape
+				{
+					this->changeValue(4, i);
+				}
+				this->changeValue(3, 0);
+				this->changeValue(3, 1);
+				break;
+
+		case 6 :for (i = 0; i < 2; i++)		//O shape
+				{
+					this->changeValue(4, i);
+				}
+				this->changeValue(3, 0);
+				this->changeValue(3, 1);
+				break;
+		}
 	}
 
 private:
